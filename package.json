@@ -1,0 +1,70 @@
+{
+  "name": "@manasdb/mcp-server",
+  "version": "0.1.0",
+  "description": "Plug-and-play MCP memory server for AI agents — powered by ManasDB polyglot storage (MongoDB, PostgreSQL, and more)",
+  "main": "dist/index.js",
+  "exports": {
+    ".": "./dist/index.js",
+    "./src": "./src/index.ts"
+  },
+  "type": "module",
+  "author": "ManasDB Contributors",
+  "license": "SEE LICENSE IN LICENSE",
+  "homepage": "https://github.com/manasdb/manasdb#readme",
+  "bugs": {
+    "url": "https://github.com/manasdb/manasdb/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/manasdb/manasdb.git"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "dist",
+    "LICENSE",
+    "README.md"
+  ],
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "ai-memory",
+    "manasdb",
+    "claude",
+    "cursor",
+    "rag",
+    "vector-search",
+    "mongodb",
+    "postgresql",
+    "polyglot",
+    "llm"
+  ],
+  "bin": {
+    "manasdb-mcp": "./dist/index.js",
+    "manasdb-mcp-setup": "./dist/setup.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "start": "node --env-file=.env dist/index.js",
+    "inspector": "npx -y @modelcontextprotocol/inspector node --env-file=.env dist/index.js",
+    "setup": "node dist/setup.js"
+  },
+  "dependencies": {
+    "@manasdb/core": "^0.3.2",
+    "@modelcontextprotocol/sdk": "^1.4.1",
+    "bytenode": "^1.5.7",
+    "zod": "^3.23.8"
+  },
+  "optionalDependencies": {
+    "mongodb": "^6.3.0",
+    "pg": "^8.11.3"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.6",
+    "typescript": "^5.3.3"
+  }
+}
