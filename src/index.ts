@@ -136,12 +136,13 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
       const { text } = MemorizeSchema.parse(request.params.arguments);
       
       try {
-        await manasdb.absorb(text);
+        const result = await manasdb.absorb(text);
+        const contentId = result?.contentId ?? result?.inserted?.[0]?.contentId ?? 'unknown';
         return {
           content: [
             {
               type: "text",
-              text: "Successfully memorized the context across all healthy database providers.",
+              text: `Successfully memorized. contentId: ${contentId}\n\nUse this contentId with the 'forget' tool to delete this memory later.`,
             },
           ],
         };
@@ -163,13 +164,25 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
       const { query } = RecallSchema.parse(request.params.arguments);
       try {
         const results = await manasdb.recall(query);
+        // Format results to prominently surface contentId for each memory
+        let formatted: string;
+        if (Array.isArray(results) && results.length > 0) {
+          formatted = results.map((r: any, i: number) => {
+            const lines = [
+              `[${i + 1}] contentId: ${r.contentId ?? 'N/A'}`,
+              `    score:     ${typeof r.score === 'number' ? r.score.toFixed(4) : 'N/A'}`,
+              `    database:  ${r.database ?? 'N/A'}`,
+              `    text:      ${r.text ?? ''}`,
+            ];
+            if (r.metadata?.sectionTitle) lines.push(`    section:   ${r.metadata.sectionTitle}`);
+            return lines.join('\n');
+          }).join('\n\n');
+          formatted = `Found ${results.length} result(s):\n\n${formatted}\n\nTo delete a memory, use the 'forget' tool with its contentId.`;
+        } else {
+          formatted = 'No results found.';
+        }
         return {
-          content: [
-            {
-              type: "text",
-              text: typeof results === "string" ? results : JSON.stringify(results, null, 2),
-            },
-          ],
+          content: [{ type: "text", text: formatted }],
         };
       } catch (dbError: any) {
         // According to requirements: "log the error but return results from the healthy providers"

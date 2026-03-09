@@ -6,7 +6,7 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6?style=flat-square&logo=typescript)](https://www.typescriptlang.org/)
 [![MCP Compatible](https://img.shields.io/badge/MCP-Compatible-8B5CF6?style=flat-square)](https://modelcontextprotocol.io)
 [![License](https://img.shields.io/npm/l/@manasdb/mcp-server?style=flat-square)](LICENSE)
-[![Powered by ManasDB](https://img.shields.io/badge/Powered%20by-ManasDB%20Core-FF6B35?style=flat-square)](https://github.com/manasdb/manasdb)
+[![Powered by ManasDB](https://img.shields.io/badge/Powered%20by-ManasDB%20Core-FF6B35?style=flat-square)](https://github.com/manasdb/mcp-server)
 
 > **ManasDB = Memory Layer for AI Agents.**
 
